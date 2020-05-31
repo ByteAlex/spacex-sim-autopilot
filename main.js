@@ -302,4 +302,19 @@ function getRawDistance(type) {
     return Number(raw.substr(0, raw.length - 2))
 }
 
+function insertAutoPilotButton() {
+    let div = document.createElement("div");
+    div.id = "autopilot"
+    div.style.position = "absolute"
+    div.style.bottom = "2%"
+    div.style.color = "white"
+    div.style.left = "48%"
+    let btn = document.createElement("button")
+    btn.textContent = "Auto Pilot"
+    btn.onclick = autopilot
+    div.appendChild(btn)
+    document.body.appendChild(div)
+}
+
+insertAutoPilotButton()
 loop()
