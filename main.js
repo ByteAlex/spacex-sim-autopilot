@@ -28,7 +28,7 @@ function correctDistance() {
         speedThreshold(25, 50, 0.4, 0.75, 0.5, false)
         speedThreshold(5, 25, 0.2, 0.5, 0.35, false)
         speedThreshold(3, 5, 0.005, 0.05, 0.03, false)
-        speedThreshold(0, 3, 0.005, 0.05, 0.03, true)
+        speedThreshold(0, 3, 0.005, 0.02, 0.02, true)
     }
     zThreshold(50, 1000, translationPulseSize * 50)
     zThreshold(10, 50, translationPulseSize * 25)
@@ -52,6 +52,8 @@ function ratelimit(key, interval, fun) {
 }
 
 function zThreshold(distanceMin, distanceMax, threshold) {
+    if(getDistanceX() < 0.2 && Math.abs(getDistanceZ()) < 0.2)
+        return;
     if (getDistanceZ() === 0) {
         if (motionVector.y < -translationPulseSize * 2) {
             translateUp()
@@ -62,17 +64,27 @@ function zThreshold(distanceMin, distanceMax, threshold) {
     }
     if (getDistanceZ() >= distanceMin && getDistanceZ() < distanceMax) {
         if (motionVector.y > -threshold) {
-            translateDown()
+            if(getDistanceX() < 1) {
+                ratelimit("near_down", 500, translateDown)
+            } else {
+                translateDown()
+            }
         }
     }
     if (getDistanceZ() <= -distanceMin && getDistanceZ() > -distanceMax) {
         if (motionVector.y < threshold) {
-            translateUp()
+            if(getDistanceX() < 1) {
+                ratelimit("near_up", 500, translateUp)
+            } else {
+                translateUp()
+            }
         }
     }
 }
 
 function yThreshold(distanceMin, distanceMax, threshold) {
+    if(getDistanceX() < 0.2 && Math.abs(getDistanceY()) < 0.2)
+        return;
     if (getDistanceY() === 0) {
         if (motionVector.x < -translationPulseSize * 2) {
             translateRight()
@@ -83,12 +95,20 @@ function yThreshold(distanceMin, distanceMax, threshold) {
     }
     if (getDistanceY() >= distanceMin && getDistanceY() < distanceMax) {
         if (motionVector.x > -threshold) {
-            translateLeft()
+            if(getDistanceX() < 1) {
+                ratelimit("near_left", 500, translateLeft)
+            } else {
+                translateLeft()
+            }
         }
     }
     if (getDistanceY() <= -distanceMin && getDistanceY() > -distanceMax) {
         if (motionVector.x < threshold) {
-            translateRight()
+            if(getDistanceX() < 1) {
+                ratelimit("near_right", 500, translateRight)
+            } else {
+                translateRight()
+            }
         }
     }
 }
