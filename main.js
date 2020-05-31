@@ -28,7 +28,7 @@ function correctDistance() {
         speedThreshold(25, 50, 0.4, 0.75, 0.5, false)
         speedThreshold(5, 25, 0.2, 0.5, 0.35, false)
         speedThreshold(3, 5, 0.005, 0.05, 0.03, false)
-        speedThreshold(0, 3, 0.001, 0.01, 0.008, true)
+        speedThreshold(0, 3, 0.005, 0.05, 0.03, true)
     }
     zThreshold(50, 1000, translationPulseSize * 50)
     zThreshold(10, 50, translationPulseSize * 25)
