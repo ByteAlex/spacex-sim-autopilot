@@ -30,7 +30,6 @@ function correctDistance() {
         speedThreshold(3, 5, 0.005, 0.05, 0.03, false)
         speedThreshold(0, 3, 0.001, 0.01, 0.008, true)
     }
-    console.log(motionVector)
     zThreshold(50, 1000, translationPulseSize * 50)
     zThreshold(10, 50, translationPulseSize * 25)
     zThreshold(0, 10, translationPulseSize * 2)
